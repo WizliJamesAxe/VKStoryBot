@@ -13,5 +13,13 @@ class VK_CORE:
 
     def Check_dialogs(self):
         return self.__Execute__("messages","getDialogs","count=20");
+
+    def GetUnread(self):
+        try:
+            self.Check_dialogs()['response']['unread_dialogs']
+        except KeyError:
+            print("Все прочитаны");
+            return {};
+
     
  
