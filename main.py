@@ -2,6 +2,13 @@ import time;
 import json;
 from VK_CORE import VK_CORE;
 from DB_CORE import DB_CORE;
+import STORY
+
+def ReadFile():
+	A = STORY.ParseFile("test.txt");
+	idQ = db.AddQuest("test");
+	for obj in A:
+		db.AddPoint(idQ, obj['id'], obj['message'], obj['next'], obj['choice']);
 
 vk = VK_CORE("f53d1cee34e8c4ad7db77784832cf20b4ab1c81f52718e411a12044cf4f75c23b47678e4cb30ca564d41a");
 db = DB_CORE();
@@ -17,7 +24,8 @@ def go():
 
     # messages = echo['response']['items'];
     messages = vk.GetUnread();
-
+    messages = messages['response']['items'];
+    
     for i in messages:
         try:
             i['unread'];
@@ -35,7 +43,7 @@ def go():
 			
         #ЕСЛИ ЕСТЬ ТО СМОТРИМ ЧЕКПОИНТ И ОТВЕТ
         elif (len(find_user)==1):
-            print(find_user);
+           print(db.GetPoint(find_user[0][1],find_user[0][2]));
         #ERROR
         else:
             print("Ты конченный, это пиздец, в БД вот столько этих записей: " + str(len(find_user)));
@@ -43,16 +51,18 @@ def go():
 #МЕНЯЕМ ЧЕКПОИНТ ЧЕЛОВЕКА ПО ИД В БД
 #СЛЕДУЮЩИЙ ЧЕЛОВЕК
 
-    
-
-    
-    #go();
-
-while (True):
-    go();
+# while (True):
+#     go();
 	
-    #КОНЕЦ ТАЙМЕРА	
-    time.sleep(5);
+#     #КОНЕЦ ТАЙМЕРА	
+#     time.sleep(5);
+
+
+
+
+
+
+
 
 #stroka = {"yes":[1,"hi"],"no":[2,"bue"]};
 #diction = json.dumps(stroka);

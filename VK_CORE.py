@@ -20,6 +20,10 @@ class VK_CORE:
         except KeyError:
             print("Все прочитаны");
             return {};
+        return self.Check_dialogs();
+
+    def SendMessage(self, user_id, message):
+        self.__Execute__("messages", "send", "user_id="+str(user_id)+"&message="+message);
 
     
  
