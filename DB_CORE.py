@@ -67,6 +67,8 @@ class DB_CORE:
             #print('INSERT INTO quest' + str(idQ) + ' VALUES ( "' + str(idS) + '", "' + message + '", "' + str(nextQ) + '", "' + str(choice) + '" );')
         except db.Error:
             print("ОШИБКА В ЭДПОИНТ")
+            print('INSERT INTO quest' + str(idQ) + ' VALUES ( "' + str(idS) + '", :mes , "' + str(nextQ) + '", "' + str(choice) + '" );')
+            print({'mes': message})
             return;        
         self.c.commit();  
 

@@ -41,7 +41,7 @@ def CreateMessage(u_ID, thisQuest, cStory, message=''):
 
     find_Story = db.GetPoint(thisQuest,cStory);
     if(find_Story==[]):
-        print('Не считал')
+        print('Не считал' +' '+ str(thisQuest) +' '+ str(cStory))
         return;
 
     message_to_user = find_Story[0][1];
