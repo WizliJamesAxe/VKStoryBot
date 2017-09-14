@@ -8,11 +8,17 @@ class VK_CORE:
         self.token = t0ken;
         
     def __Execute__(self, item, method, params):
-        req = requests.get(self.URL + item + '.' + method + '?' + params + '&v=5.52&access_token=' + self.token);
+        ver_and_tok = {'v': '5.52', 'access_token': self.token};
+        params.update(ver_and_tok);
+        req = requests.post(self.URL + item + '.' + method, data=params)# + '?' + params + '&v=5.52&access_token=' + self.token);
+        #print(req.text);
         return req.json();
+        # req = requests.get(self.URL + item + '.' + method + '?' + params + '&v=5.52&access_token=' + self.token);
+        # print(req.text);
+        # return req.json();
 
     def Check_dialogs(self):
-        return self.__Execute__("messages","getDialogs","count=20");
+        return self.__Execute__("messages","getDialogs",{"count": "20"});
 
     def GetUnread(self):
         try:
@@ -23,7 +29,8 @@ class VK_CORE:
         return self.Check_dialogs();
 
     def SendMessage(self, user_id, message):
-        self.__Execute__("messages", "send", "user_id="+str(user_id)+"&message="+message);
+        #print(message)
+        self.__Execute__("messages", "send", {"user_id":str(user_id), "message":message});
 
     
  
