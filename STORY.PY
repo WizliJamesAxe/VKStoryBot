@@ -1,4 +1,5 @@
 # coding: utf8
+import json;
 def CheckSignature(s, sign):
         if(s.find(sign) == 0):
                 return(True);
@@ -21,7 +22,7 @@ def Convert(A):
         result = [];
         for i in range(len(A)):
                 ##FORMAT OF DICT
-                temp = {'id':'', 'message':'', 'next': '', 'choice':[]};
+                temp = {'id':'', 'message':'', 'next': '', 'choice':[], 'media':''};
                 
                 ##CHECK ID
                 bCheck = CheckSignature(A[i][0],"!!!");
@@ -29,7 +30,7 @@ def Convert(A):
                         print("Can't find !!!");
                         return;
                 
-                if len(A[i][0][4:])>10:
+                if len(A[i][0][4:])>20:
                         print("Very big size for id");
                         return;
                 
@@ -38,14 +39,18 @@ def Convert(A):
                 ##CHECK MESSAGE AND ANSWER
                 j=1;
                 
-                bCheck = CheckSignature(A[i][j],"???");                
+                bCheck = CheckSignature(A[i][j],"@@@");                
                 while bCheck!=True:
                         j += 1;
-                        bCheck = CheckSignature(A[i][j],"???");
+                        bCheck = CheckSignature(A[i][j],"@@@");
 
                 #WRITE MESSAGE        
                 for line in range(j-1):
                         temp['message'] += A[i][line+1] + "\n";
+
+                #WRITE MEDIA
+                temp['media'] = A[i][j][4:];
+                j = j+1;
 
                 #WRITE NEXT
                 temp['next'] = A[i][j][4:];
@@ -59,6 +64,8 @@ def Convert(A):
                 while (len(A[i])-1 > j):     
                         temp['choice'].append(A[i][j]);
                         j += 1;
+
+                temp['choice'] = json.dumps(temp['choice']);
 
                 result.append(temp);
 

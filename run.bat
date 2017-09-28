@@ -1,0 +1,1 @@
+C:\Users\Viacheslav\AppData\Local\Programs\Python\Python36\python.exe C:\Users\Viacheslav\Desktop\kek\VKStoryBot\DB_CORE.py
