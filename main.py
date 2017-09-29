@@ -5,10 +5,11 @@ import time;
 from VK_CORE import VK_CORE;
 from DB_CORE import DB_CORE;
 from TOKENS import TOKEN;
-import STORY;
+from STORY import STORY;
 
+workS = STORY();
 def ReadFile(nameQuest, nameFile = "Scenary/test.txt"):
-	A = STORY.ParseFile(nameFile);
+	A = workS.ParseFile(nameFile);
 	idQ = db.AddQuest(nameQuest);
 	for obj in A:
 		db.AddPoint(idQ, obj['id'], obj['message'], obj['next'], obj['choice'], obj['media']);
