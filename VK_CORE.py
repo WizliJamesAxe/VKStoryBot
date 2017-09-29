@@ -55,14 +55,23 @@ class VK_CORE:
             except:
                 print(resp);
                 return 'ERROR';
-            print(resp['error']['error_msg']);
+            print(resp);
             return 'ERROR';
         return 'OK';
 
     def AllFave(self):
-        try:
-            A = self.__Execute__("fave", "getPosts",{'count':20})['response'];
-        except:
-            return "ERROR";
+        resp = self.__Execute__("fave", "getPosts",{'count':20})
+        if(resp=='ERROR'):
+            return 'ERROR';
 
-        return A;
+        try:
+            resp['response'];
+        except:
+            try:
+                resp['error'];
+            except:
+                print(resp);
+                return 'ERROR';
+            print(resp);
+            return 'ERROR';
+        return resp['response'];

@@ -4,7 +4,8 @@ import time;
 
 from VK_CORE import VK_CORE;
 from DB_CORE import DB_CORE;
-import STORY
+from TOKENS import TOKEN;
+import STORY;
 
 def ReadFile(nameQuest, nameFile = "Scenary/test.txt"):
 	A = STORY.ParseFile(nameFile);
@@ -12,7 +13,9 @@ def ReadFile(nameQuest, nameFile = "Scenary/test.txt"):
 	for obj in A:
 		db.AddPoint(idQ, obj['id'], obj['message'], obj['next'], obj['choice'], obj['media']);
 
-vk = VK_CORE("f53d1cee34e8c4ad7db77784832cf20b4ab1c81f52718e411a12044cf4f75c23b47678e4cb30ca564d41a");
+token = TOKEN();        
+vkU = VK_CORE(token.GetUToken());
+vk = VK_CORE(token.GetGToken());
 db = DB_CORE();
 
 def CreateMessage(user, message):  #Само общение
@@ -109,17 +112,15 @@ def LoopRun():   #Бесконечная работа скрипта
         #time.sleep(3);
 
 
-def ForRoma(fin_Fave = 'wall-76525381_48922', rec_ID = 39236203):
-    vk_for_roma = VK_CORE('e0430f548e35b73c124d4e1987678dfade71d0a3d44a5b2bf87fffec75110666c72112789cb5b96f7a295');
-    A = vk_for_roma.AllFave();
+def ForRoma(rec_ID = 39236203, fin_Fave = 'wall-76525381_48922'):
+    A = vkU.AllFave();
     if(A=="ERROR"):
         return A;
-
-    rec_ID = 1;
 
     vk.SendMessage(rec_ID,'Привет, по просьбе моего сексуального хозяина - Вячеслава Сысоева, я скину тебе все записи, которые он оценил за сегодня:')
 
     i=0;
+    
     while(('wall'+str(A['items'][i]['from_id'])+'_'+str(A['items'][i]['id']))!=fin_Fave):
         vk.SendMessage(rec_ID, '', ('wall'+str(A['items'][i]['from_id'])+'_'+str(A['items'][i]['id'])));
         i+=1;
